@@ -35,4 +35,20 @@ namespace Walnut {
 		glfwSetInputMode(windowHandle, GLFW_CURSOR, GLFW_CURSOR_NORMAL + (int)mode);
 	}
 
+	static float m_MouseScrollDelta = 0.0f;
+	
+	float Input::GetMouseScrollDelta()
+	{
+		return m_MouseScrollDelta;
+	}
+
+	void Input::SetMouseScrollDelta(float delta)
+	{
+		m_MouseScrollDelta = delta;
+	}
+
+	void Input::ResetMouseScrollDelta()
+	{
+		m_MouseScrollDelta = 0.0f;
+	}
 }
