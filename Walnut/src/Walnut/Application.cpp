@@ -33,6 +33,8 @@ extern bool g_ApplicationRunning;
 #define IMGUI_VULKAN_DEBUG_REPORT
 #endif
 
+#include <Walnut/Input/Input.h>
+
 static VkAllocationCallbacks* g_Allocator = NULL;
 static VkInstance               g_Instance = VK_NULL_HANDLE;
 static VkPhysicalDevice         g_PhysicalDevice = VK_NULL_HANDLE;
@@ -466,6 +468,15 @@ namespace Walnut {
 
 		// Setup Platform/Renderer backends
 		ImGui_ImplGlfw_InitForVulkan(m_WindowHandle, true);
+
+		// Mouse wheel scroll callback
+		glfwSetScrollCallback(m_WindowHandle, [](GLFWwindow* window, double xOffset, double yOffset)
+			{
+				ImGui_ImplGlfw_ScrollCallback(window, xOffset, yOffset);
+
+				Walnut::Input::SetMouseScrollDelta((float)yOffset);
+			});
+
 		ImGui_ImplVulkan_InitInfo init_info = {};
 		init_info.Instance = g_Instance;
 		init_info.PhysicalDevice = g_PhysicalDevice;
@@ -679,6 +690,8 @@ namespace Walnut {
 			m_FrameTime = time - m_LastFrameTime;
 			m_TimeStep = glm::min<float>(m_FrameTime, 0.0333f);
 			m_LastFrameTime = time;
+
+			Input::ResetMouseScrollDelta();
 		}
 
 	}
