@@ -15,6 +15,11 @@ namespace Walnut {
 		static glm::vec2 GetMousePosition();
 
 		static void SetCursorMode(CursorMode mode);
+
+		// Ability to change Camera FOV by scrolling mouse wheel
+		static float GetMouseScrollDelta();
+		static void SetMouseScrollDelta(float delta);
+		static void ResetMouseScrollDelta();
 	};
 
 }
